@@ -1,0 +1,41 @@
+Crear enlaces
+
+enable
+configure terminal
+interface serial 2/0
+ip address 172.1.1.18 255.255.255.0
+no shutdown 
+end
+copy running-config startup-config 
+
+
+Agregar ruta por defecto
+
+enable
+configure terminal
+ip route 0.0.0.0 0.0.0.0 serial 2/0
+
+Encapsular
+
+enable
+configure terminal
+interface serial 2/0
+encapsulation frame-relay 
+
+Enrutamiento OSPF
+
+enable
+configure terminal
+router ospf 1
+network 200.21.30.0 0.0.0.255 area 1
+network 172.1.1.16 0.0.0.255 area 1
+end
+copy running-config startup-config 
+
+Crear enlaces
+enable
+configure terminal
+interface fastEthernet 0/0
+ip address 200.21.30.1 255.255.255.0
+no shutdown
+

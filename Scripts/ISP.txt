@@ -1,0 +1,47 @@
+enable
+configure terminal
+interface serial 2/0
+description isp-bogota
+ip address 172.1.1.1 255.255.255.252
+clock rate 128000
+no shutdown
+end
+
+enable
+configure terminal
+router ospf 1
+network 172.1.1.0 0.0.0.3 area 1
+network 172.1.1.0 0.0.0.16 area 1
+network 200.21.30.0 0.0.0.255 area 1
+end
+copy running-config startup-config 
+
+Crear enlaces
+
+enable
+configure terminal
+interface serial 3/0
+description isp-internet
+ip address 172.1.1.17 255.255.255.0
+no shutdown 
+end
+copy running-config startup-config 
+
+Agregar ruta por defecto
+
+enable
+configure terminal
+ip route 0.0.0.0 0.0.0.0 serial 3/0
+
+Encapsular
+
+enable
+configure terminal
+interface serial 3/0
+encapsulation frame-relay 
+ip access-group 1 in
+
+Access list
+
+enable
+configure terminal

@@ -1,0 +1,234 @@
+﻿SW USUARIO G
+enable
+configure terminal 
+vtp mode client
+interface range fastEthernet 0/1-4
+switchport mode trunk
+switchport trunk native vlan 1
+end
+copy running-config startup-config 
+
+
+SW ADMINISTRATIVA G
+enable
+configure terminal 
+vtp mode client
+interface range fastEthernet 0/1-4
+switchport mode trunk
+switchport trunk native vlan 1
+end
+copy running-config startup-config 
+
+
+SW SERVIDORES G
+enable
+configure terminal
+vtp version 2
+vtp domain ucundinamarca
+vlan 10
+name usuarios
+vlan 20
+name administrativa
+vlan 30
+name servidores
+interface range fastEthernet 0/1-4
+switchport mode trunk
+switchport trunk native vlan 1
+end
+copy running-config startup-config 
+
+ASIGNACIÓN PUERTOS
+
+Usuarios
+enable 
+configure terminal
+interface range fastEthernet 0/9-24
+switchport mode access
+switchport access vlan 10
+end
+copy running-config startup-config 
+
+Administrativos
+enable 
+configure terminal
+interface range fastEthernet 0/9-24
+switchport mode access
+switchport access vlan 20
+end
+copy running-config startup-config 
+
+Servidores
+enable 
+configure terminal
+interface range fastEthernet 0/9-24
+switchport mode access
+switchport access vlan 30
+end
+copy running-config startup-config 
+
+ENLACES TRONCALES DE SWITCH A ROUTER
+
+enable
+configure terminal
+interface gigabitEthernet 0/1
+switchport mode trunk
+switchport trunk native vlan 1
+end
+copy running-config startup-config 
+
+
+CREACION DESUB-INTERFACES
+enable
+configure terminal
+interface gigabitEthernet9/0
+ip access-group 104 in
+no shutdown
+exit
+interface gigabitEthernet9/0.10
+encapsulation dot1Q 10
+ip address 10.3.176.1 255.255.248.0
+description vlan10
+ip access-group 104 in
+
+interface gigabitEthernet9/0.20
+encapsulation dot1Q 20
+ip address 10.3.160.1 255.255.240.0
+description vlan20
+ip access-group 104 in
+
+interface gigabitEthernet9/0.30
+encapsulation dot1Q 30
+ip address 10.3.184.97 255.255.255.224
+description vlan30
+ip access-group 104 in
+end
+copy running-config startup-config 
+
+CREACIÓN DHCP
+enable
+configure terminal
+ip dhcp pool vlan10
+network 10.3.176.0 255.255.248.0
+default-router 10.3.176.1
+dns-server 10.3.184.4
+exit
+ip dhcp excluded-address 10.3.176.1 10.3.176.10
+
+ip dhcp pool vlan20
+network 10.3.160.0 255.255.240.0
+default-router 10.3.160.1
+dns-server 10.3.184.4
+exit
+ip dhcp excluded-address 10.3.160.1 10.3.160.10
+
+ip dhcp pool vlan30
+network 10.3.184.96 255.255.255.224
+default-router 10.3.184.97
+dns-server 10.3.184.4
+exit
+ip dhcp excluded-address 10.3.184.97 10.3.184.107
+end
+copy running-config startup-config 
+
+
+
+ASIGNACIÓN DE IP A ENLACES SERIALES
+enable
+configure terminal
+interface serial 3/0
+ip address 172.1.1.6 255.255.255.252
+clock rate 128000
+description enlace girardo-bogota
+ip access-group 104 in
+no shutdown
+
+interface serial 2/0
+ip address 172.1.1.9 255.255.255.252
+clock rate 128000
+description girardo-pereira
+ip access-group 104 in
+no shutdown
+exit
+end
+copy running-config startup-config 
+
+ENRUTAMIENTO OSPF
+
+enable
+configure terminal
+router ospf 1
+network 10.3.176.0 0.0.7.255 area 1
+network 10.3.184.96 0.0.0.31 area 1
+network 10.3.160.0  0.0.15.255 area 1
+network 172.1.1.8 0.0.0.3 area 1
+network 172.1.1.4 0.0.0.3 area 1
+end
+copy running-config startup-config 
+
+SEGURIDAD DE PUERTO
+enable
+configure terminal
+interface fastEthernet 0/24
+switchport port-security 
+switchport port-security maximum 1
+switchport port-security violation restrict (No apaga y restringe el envio de datos)
+switchport port-security mac-address sticky (Obtener la mac automaticamente del puerto conectado)
+end
+copy running-config startup-config 
+
+STP
+Servidores
+enable
+configure terminal
+spanning-tree vlan 1 root primary
+end
+copy running-config startup-config  
+
+Administrativa (Root de respaldo)
+enable
+configure terminal
+spanning-tree vlan 1 root secondary 
+end
+copy running-config startup-config 
+
+STP PortFast
+
+Usuarios
+enable 
+configure terminal
+interface range fastEthernet 0/9-23
+spanning-tree portfast 
+end
+copy running-config startup-config  
+
+Servidores
+enable 
+configure terminal
+interface range fastEthernet 0/9-24
+spanning-tree portfast 
+end
+copy running-config startup-config  
+
+Administrativa
+enable 
+configure terminal
+interface range fastEthernet 0/9-24
+spanning-tree portfast 
+end
+copy running-config startup-config  
+
+Habilitar Telnet
+
+Switch Usuarios
+
+enable
+configure terminal
+int vlan1
+ip address 10.3.184.71 255.255.255.224
+exit
+line vty 0 1
+password unicundi2019
+login
+exit
+ip default-gateway 10.3.184.1 
+do write

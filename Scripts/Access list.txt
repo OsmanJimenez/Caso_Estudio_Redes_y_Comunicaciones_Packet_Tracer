@@ -1,0 +1,51 @@
+Access list pereira
+access-list 103 deny ip 10.3.0.0 0.0.63.255 host 10.3.184.66
+access-list 103 deny ip 10.3.184.96 0.0.0.31 host 10.3.184.66
+access-list 103 deny ip 10.3.160.0 0.0.15.255 host 10.3.184.66
+access-list 103 deny ip 10.0.0.0 0.0.255.255 host 10.3.184.66
+access-list 103 deny ip 10.3.184.0 0.0.0.63 host 10.3.184.66
+access-list 103 deny ip 200.21.30.0 0.0.0.255 host 10.3.184.66
+access-list 103 permit tcp host 10.3.184.67 host  10.3.184.2 eq ftp 
+access-list 103 permit udp  host 10.3.184.67 host 10.3.184.5 eq tftp 
+access-list 103 deny tcp any host 10.3.184.2 eq ftp 
+access-list 103 permit tcp 10.3.184.64  0.0.0.31 any eq telnet 
+access-list 103 permit tcp 10.3.184.96  0.0.0.31 any eq telnet
+access-list 103 permit tcp 10.3.184.0   0.0.0.63 any eq telnet
+access-list 103 deny tcp any any eq telnet
+access-list 103 permit ip any any
+Access list girardo
+access-list 104 deny ip 10.3.0.0 0.0.63.255 host 10.3.176.2
+access-list 104 deny ip 10.3.184.96 0.0.0.31 host 10.3.176.2
+access-list 104 deny ip 10.3.160.0 0.0.15.255 host 10.3.176.2
+access-list 104 deny ip 10.0.0.0 0.0.255.255 host 10.3.176.2
+access-list 104 deny ip 10.3.184.0 0.0.0.63 host 10.3.176.2
+access-list 104 deny ip 200.21.30.0 0.0.0.255 host 10.3.176.2
+access-list 104 permit tcp host 10.3.184.98 host  10.3.184.2 eq ftp 
+access-list 104 permit udp  host 10.3.184.98 host 10.3.184.5 eq tftp 
+access-list 104 deny tcp any host 10.3.184.2 eq ftp 
+access-list 104 permit tcp 10.3.184.64  0.0.0.31 any eq telnet 
+access-list 104 permit tcp 10.3.184.96  0.0.0.31 any eq telnet
+access-list 104 permit tcp 10.3.184.0   0.0.0.63 any eq telnet
+access-list 104 deny tcp any any eq telnet
+access-list 104 permit ip any any
+Access list Bogota
+access-list 105 permit tcp host 10.3.184.67 host 10.3.184.2 eq ftp
+access-list 105 permit udp host 10.3.184.67 host 10.3.184.5 eq tftp
+access-list 105 permit tcp host 10.3.184.98 host 10.3.184.2 eq ftp
+access-list 105 permit udp host 10.3.184.98 host 10.3.184.5 eq tftp
+access-list 105 permit tcp host 10.3.184.6 host 10.3.184.2 eq ftp
+access-list 105 permit udp host 10.3.184.6 host 10.3.184.2 eq tftp
+access-list 105 permit upd host 200.21.30.31 host 10.3.184.2 eq tftp
+access-list 105 deny tcp any host 10.3.184.2 eq ftp
+access-list 105 deny ip 10.3.0.0 0.0.63.255 host 10.3.184.3
+access-list 105 deny ip 10.3.128.0 0.0.31.255 host 10.3.184.3
+access-list 105 deny ip 10.3.176.0 0.0.7.255 host 10.3.184.3
+access-list 105 deny ip 10.3.160.0 0.0.15.255 host 10.3.184.3
+access-list 105 deny ip 10.0.0.0 0.0.255.255 host 10.3.184.3
+access-list 105 deny ip 10.2.0.0 0.0.127.255 host 10.3.184.3
+access-list 105 deny ip 200.21.30.0 0.0.0.255 host 10.3.184.3
+access-list 105 permit tcp 10.3.184.64 0.0.0.31 any eq telnet
+access-list 105 permit tcp 10.3.184.96 0.0.0.31 any eq telnet
+access-list 105 permit tcp 10.3.184.0 0.0.0.63 any eq telnet
+access-list 105 deny tcp any any eq telnet
+access-list 105 permit ip any any

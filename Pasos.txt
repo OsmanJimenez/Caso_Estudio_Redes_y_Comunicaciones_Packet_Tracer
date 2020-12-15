@@ -1,0 +1,29 @@
+1.Calcular requisitos de host.
+2.Requisitos de direccionamiento
+3.Creacion del esquema de direccionamiento ip.
+4.Diseño del diagrama logico.
+5.Descripción de Routers.
+6.Creación de vlans(Asignación de vtp mode cliente, dominio)
+	Vlans:
+	10 Usuarios
+	20 Admnistrativos
+	30 Servidores
+7.Asignación de rangos de vlans
+	9-24 (Se dejan 3 libres para los segmentos libres)
+8.Poner enlaces troncales entre switch y router
+9.Creación de sub-interfaces virtuales
+10.Creación DHCP
+11.Asignación de IP a enlaces seriales
+12.Enrutamiento OSPF con area 1 para todos y ID 1
+13.Seguridad en puerto
+14.STP
+15.STP PortFast
+16.Configurar router ISP
+17.OSPF a router ISP
+18.Configuración Frame Relay
+19.Configurar DNS
+20.Configuración de Servidores.
+21.Crear Access list (Bloquear Messenger)
+22.Habilitar Telnet en routers
+23.Habilitar SSH en switches.
+

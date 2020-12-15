@@ -1,0 +1,53 @@
+girardot
+ip route 10.3.176.0 255.255.248.0 gigabitEthernet 9/0.10 112
+ip route 10.3.160.0 255.255.240.0 gigabitEthernet 9/0.20 112
+ip route 10.3.184.96 255.255.255.224  gigabitEthernet 9/0.20 112
+
+ip route 10.3.128.0 255.255.224.0 serial 2/0 112
+ip route 10.3.0.0 255.255.192.0 serial 2/0 112
+ip route 10.3.184.64 255.255.255.224 serial 2/0 112
+
+ip route 10.2.0.0 255.255.128.0 serial 3/0 112
+ip route 10.0.0.0 255.255.0.0  serial 3/0 112
+ip route 10.3.184.0 255.255.255.192 serial 3/0 112
+        
+ip route 200.21.30.0 255.255.255.0 serial 3/0 112
+
+
+bogota
+ip route 10.3.176.0 255.255.248.0 serial 2/0 112
+ip route 10.3.160.0 255.255.240.0 serial 2/0 112
+ip route 10.3.184.96 255.255.255.224 serial 2/0 112
+ 
+ip route 10.3.128.0 255.255.224.0 serial 3/0 112
+ip route 10.3.0.0 255.255.192.0 serial 3/0 112
+ip route 10.3.184.64 255.255.255.224 serial 3/0 112
+
+ip route 10.2.0.0 255.255.128.0 gigabitEthernet 7/0.10 112
+ip route 10.0.0.0 255.255.0.0 gigabitEthernet 7/0.20 112
+ip route 10.3.184.0 255.255.255.192 gigabitEthernet 7/0.30 112
+
+ip route 200.21.30.0 255.255.255.0 serial 6/0 112
+
+
+pereira
+ip route 10.3.176.0 255.255.248.0 serial 2/0 112
+ip route 10.3.160.0 255.255.240.0 serial 2/0 112
+ip route 10.3.184.96 255.255.255.224 serial 2/0 112
+
+ip route 10.3.128.0 255.255.224.0 gigabitEthernet 7/0.10 112
+ip route 10.3.0.0 255.255.192.0 gigabitEthernet 7/0.20 112
+ip route 10.3.184.64 255.255.255.224 gigabitEthernet 7/0.30 112
+
+ip route 10.2.0.0 255.255.128.0 serial 3/0 112
+ip route 10.0.0.0 255.255.0.0 serial 3/0 112
+ip route 10.3.184.0 255.255.255.192 serial 3/0 112
+
+ip route 200.21.30.0 255.255.255.0 serial 3/0 112
+
+internet
+ip route 0.0.0.0 0.0.0.0 fastEthernet 0/0 112
+ip route 0.0.0.0 0.0.0.0 Serial2/0 112
+
+Isp
+ip route 0.0.0.0 0.0.0.0 Serial3/0 

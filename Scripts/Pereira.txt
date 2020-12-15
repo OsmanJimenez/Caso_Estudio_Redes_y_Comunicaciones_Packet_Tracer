@@ -1,0 +1,214 @@
+﻿SW USUARIO P
+enable
+configure terminal 
+vtp mode client
+interface range fastEthernet 0/1-4
+switchport mode trunk
+switchport trunk native vlan 1
+end
+copy running-config startup-config 
+
+
+SW ADMINISTRATIVA P
+enable
+configure terminal 
+vtp mode client
+interface range fastEthernet 0/1-4
+switchport mode trunk
+switchport trunk native vlan 1
+end
+copy running-config startup-config 
+
+
+SW SERVIDORES P
+enable
+configure terminal
+vtp version 2
+vtp domain ucundinamarca
+vlan 10
+name usuarios
+vlan 20
+name administrativa
+vlan 30
+name servidores
+interface range fastEthernet 0/1-4
+switchport mode trunk
+switchport trunk native vlan 1
+end
+copy running-config startup-config 
+
+ASIGNACIÓN PUERTOS
+
+Usuarios
+enable 
+configure terminal
+interface range fastEthernet 0/9-24
+switchport mode access
+switchport access vlan 10
+end
+copy running-config startup-config 
+
+Administrativos
+enable 
+configure terminal
+interface range fastEthernet 0/9-24
+switchport mode access
+switchport access vlan 20
+end
+copy running-config startup-config 
+
+Servidores
+enable 
+configure terminal
+interface range fastEthernet 0/9-24
+switchport mode access
+switchport access vlan 30
+end
+copy running-config startup-config 
+
+ENLACES TRONCALES DE SWITCH A ROUTER
+
+enable
+configure terminal
+interface gigabitEthernet 0/1
+switchport mode trunk
+switchport trunk native vlan 1
+end
+copy running-config startup-config 
+
+CREACION DESUB-INTERFACES
+enable
+configure terminal
+interface gigabitEthernet7/0
+no shutdown
+exit
+interface gigabitEthernet7/0.10
+encapsulation dot1Q 10
+ip address 10.3.128.1 255.255.224.0
+ip access-group 103 in
+
+interface gigabitEthernet7/0.20
+encapsulation dot1Q 20
+ip address 10.3.0.1 255.255.192.0
+ip access-group 103 in
+
+interface gigabitEthernet7/0.30
+encapsulation dot1Q 30
+ip address 10.3.184.65 255.255.255.224
+ip access-group 103 in
+end
+copy running-config startup-config 
+
+CREACIÓN DHCP
+
+enable
+configure terminal
+ip dhcp pool vlan10
+network 10.3.128.0 255.255.224.0
+default-router 10.3.128.1
+dns-server 10.3.184.4
+exit
+ip dhcp excluded-address 10.3.128.1 10.3.128.10
+
+ip dhcp pool vlan20
+network 10.3.0.0 255.255.192.0
+default-router 10.3.0.1
+dns-server 10.3.184.4
+exit
+ip dhcp excluded-address 10.3.0.1 10.3.0.10
+
+ip dhcp pool vlan30
+network 10.3.184.64 255.255.255.224
+default-router 10.3.184.65
+dns-server 10.3.184.4
+exit
+ip dhcp excluded-address 10.3.184.65 10.3.184.75
+end
+copy running-config startup-config 
+
+
+
+ASIGNACIÓN DE IP A ENLACES SERIALES
+enable
+configure terminal
+interface serial 3/0
+ip address 172.1.1.13 255.255.255.252
+clock rate 128000
+ip access-group 103 in
+no shutdown
+
+interface serial 2/0
+ip address 172.1.1.10 255.255.255.252
+ip access-group 103 in
+no shutdown
+exit
+end
+copy running-config startup-config 
+
+
+ENRUTAMIENTO OSPF
+
+enable
+configure terminal
+route ospf 1
+network 10.3.128.0 0.0.31.255 area 1
+network 10.3.0.0 0.0.63.255 area 1
+network 10.3.184.64  0.0.0.31 area 1
+network 172.1.1.8 0.0.0.3 area 1
+network 172.1.1.12 0.0.0.3 area 1
+end
+copy running-config startup-config 
+
+SEGURIDAD DE PUERTO
+enable
+configure terminal
+interface fastEthernet 0/24
+switchport port-security 
+switchport port-security maximum 1
+switchport port-security violation restrict 
+switchport port-security mac-address sticky
+end
+copy running-config startup-config 
+
+
+STP
+Servidores
+enable
+configure terminal
+spanning-tree vlan 1 root primary
+end
+copy running-config startup-config  
+
+Administrativa (Root de respaldo)
+enable
+configure terminal
+spanning-tree vlan 1 root secondary 
+end
+copy running-config startup-config 
+
+STP PortFast
+
+Usuarios
+enable 
+configure terminal
+interface range fastEthernet 0/9-24
+spanning-tree portfast 
+end
+copy running-config startup-config  
+
+Servidores
+enable 
+configure terminal
+interface range fastEthernet 0/9-23
+spanning-tree portfast 
+end
+copy running-config startup-config  
+
+Administrativa
+enable 
+configure terminal
+interface range fastEthernet 0/9-24
+spanning-tree portfast 
+end
+copy running-config startup-config  
+

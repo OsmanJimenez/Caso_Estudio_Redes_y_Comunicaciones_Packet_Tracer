@@ -1,0 +1,23 @@
+Enable
+configure terminal 
+username admin password unicundi2019
+line vty 0 4
+password unicundi2019
+login 
+exec-timeout 5
+exit
+line console 0
+password unicundi2019
+login
+exec-timeout 5
+logging synchronous 
+exit
+enable password unicundi2019
+enable secret unicundi20191
+banner motd # Solo personal autorizado # 
+
+service password-encryption
+no ip domain-lookup
+exit
+terminal history size 200
+
